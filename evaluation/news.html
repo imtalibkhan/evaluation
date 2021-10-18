@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        img{
+            width: 480px;
+            height: 300px;
+        }
+        #newsProduct{
+            display: grid;
+            grid-template-columns: 25% 25% 25% 25%;
+            margin: auto;    
+        }
+        input{
+            padding: 20px 100px;
+            margin: 4%;
+            border-radius: 30px;   
+        }
+        #outer{
+            margin: auto;
+            background-color:#dbdbdb;
+            width: 2000px;
+            height: 100%;
+        }
+        button{
+            padding: 10px 20px;
+            border-radius: 9px;
+        }
+    </style>
+</head>
+<body style="background-color: #dbdbdb;">
+  
+    <div id="outer"> 
+        <div>
+            <span style="font-size: 40px;"><H1>HINDUSTAN TIMESS</H1> </span>
+
+        </div>
+
+    <input type="text" placeholder="enter the data"value ="trending" id="news">
+        <button onclick="getNews()">NEWS</button>
+    <div id="newsProduct"></div>
+
+</div>
+
+</body>
+<script>
+    //84de12e1cbdd4157ba090c768abd54b1
+    //https://newsapi.org/v2/everything?q=tesla&from=2021-09-18&sortBy=publishedAt&apiKey=API_KEY
+
+    let container = document.getElementById("newsProduct")
+
+    async function getNews(){
+        let news_data = document.getElementById("news").value
+
+        let res = await fetch(`https://newsapi.org/v2/everything?q=${news_data}&from=2021-09-18&sortBy=publishedAt&apiKey=84de12e1cbdd4157ba090c768abd54b1`);
+
+        let data = await res.json();
+        console.log(data);
+        showNews(data.articles);
+
+       // getNews(data);
+    }
+
+    function showNews(newss){
+        container.innerHTML=null;
+
+        newss.forEach(function(newsPRO){ // this is object
+            let div = document.createElement("a");
+            div.href = newsPRO.url
+        
+        let img = document.createElement("img")
+            img.src=newsPRO.urlToImage
+
+        let title = document.createElement("p");
+        title.innerText=newsPRO.title;
+    
+        
+
+        let uv = document.createElement("a");
+        uv.innerText = "see more";
+        uv.href = newsPRO.url
+
+        div.append(img,title,uv)
+
+        container.append(div);;
+    
+
+        });
+    }
+
+    getNews();
+    
+</script>
+</html>
