@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #options{
+            display: flex;
+            justify-content: space-between;
+            border: 1px solid green;
+            
+        }
+    </style>
+</head>
+<body>
+    <div id="navbar"></div>
+    <div id="container"> </div>
+    <!-- <div id="options">
+        <h3><a href="signin.html"></a>signin</h3>
+        <h3><a href="signup.html"></a>signup</h3>
+        <h3><a href="menu.html"></a>MENU</h3>
+        <h3><a href="random.html"></a>RANDOM</h3>
+    </div> -->
+</body>
+</html>
+
+<script type="module">
+    import navbar from "./component/navbar.js";
+
+    import {getdata,append} from "./script/showdata.js";
+    
+    let navbar_div = document.getElementById("navbar");
+    navbar_div.innerHTML = navbar();
+
+    let res = getdata(`https://www.themealdb.com/api/json/v1/1/categories.php`)
+    console.log(res);
+
+    
+   
+
+    res.then((resp)=>{
+
+        let container = document.getElementById("container");
+        console.log(resp);
+
+        append(resp,container)
+  
+    })
+    .catch((err)=>{
+        console.log(err);
+    })
+
+</script>
